@@ -1,5 +1,5 @@
 Books CRUD Application
-A simple full-stack CRUD application demonstrating clean code principles, built with NestJS, React and Playwright (end-to-end testing).
+A MVP simple full-stack CRUD application demonstrating clean code principles, built with NestJS, React and Playwright (end-to-end testing).
 
 🚀 Tech Stack
 Backend: NestJS, TypeScript, Prisma ORM, PostgreSQL
