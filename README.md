@@ -17,8 +17,13 @@ Emphasis on code clarity, modularity, and best practices suitable for production
 
 📦 Features
 1.Create, read, update, delete (CRUD) books 
+
 2.Form validation and error handling on both client and server
+
 3.Dialog-based forms for adding/editing entries
+
 4.Responsive UI with Material UI components
+
 5.Automated Playwright tests covering user CRUD flows
+
 6.shared types
