@@ -16,7 +16,7 @@ datasource db {
 
 model Book {
   id        String   @id @default(uuid())
-  name     String   @unique
+  name     String
   author      String
   publishYear Int @default(2025)
   createdAt DateTime @default(now())

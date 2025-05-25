@@ -63,7 +63,7 @@ const closeDialog = () => {
 
   return (
     <>
-    {isLoading ? <div>loading...</div>: <IconButton onClick={() => {openDialog()}}> 
+    {isLoading ? <div>loading...</div>: <IconButton data-testid={'create-button'} onClick={() => {openDialog()}}> 
       <AddCircleOutlineOutlinedIcon fontSize="large" /></IconButton> }
     {error && <div>{error.message}</div>}
     <BooksDialog

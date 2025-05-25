@@ -1,7 +1,7 @@
 export interface ICreateBookDto {
     name: string;
     author: string;
-    publishedYear?: number;
+    publishYear?: number;
 }
 export interface IBook extends ICreateBookDto {
     id: string;

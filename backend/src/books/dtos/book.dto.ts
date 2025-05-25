@@ -15,7 +15,7 @@ export class CreateBookDto implements ICreateBookDto {
   @Min(1000, { message: 'Published year must be a valid year (e.g., 1900).' })
   @Max(new Date().getFullYear(), { message: 'Published year cannot be in the future.' })
   @IsOptional()
-  publishedYear?: number;
+  publishYear?: number;
 }
 
 export class UpdateBookDto extends PartialType(CreateBookDto) implements IUpdateBookDto {}

@@ -25,7 +25,7 @@ export const BookItem = (props: items) => {
             {book.name}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-            by {book.author}
+            by <span data-testid="author">{book.author}</span>
           </Typography>
         </CardContent>
               <Box display="flex" justifyContent="flex-end" gap={1} p={1}>

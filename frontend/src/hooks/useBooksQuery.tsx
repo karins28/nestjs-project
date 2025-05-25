@@ -6,10 +6,12 @@ import type { ICreateBookDto, IUpdateBookDto } from "../../../shared/types";
 
 export function useUpdate() {
     const {showError, showSuccess}  =  useNotificationHandler()
+        const queryClient = useQueryClient();
         return useMutation({
             mutationFn: (variables: IUpdateBookDto) => {return updateItem(variables)},
           onSuccess: () => {
             showSuccess("updated book successfully")
+             queryClient.invalidateQueries({queryKey: ['fetchItems']});
           },
           onError: (error: AxiosError) => {
             showError(error.message)

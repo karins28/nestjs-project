@@ -17,7 +17,7 @@ const DEFAULT_YEAR = 2025
 export const BooksDialog = (props: Props) => {
     const [name, setName] = useState('')
     const [author, setAuthor] = useState('')
-    const [publishedYear, setPublishYear] = useState<number>(DEFAULT_YEAR)
+    const [publishYear, setPublishYear] = useState<number>(DEFAULT_YEAR)
     const [isEditMode, setIsEditMode] = useState(false);
 
 useEffect(() => {
@@ -28,13 +28,13 @@ useEffect(() => {
 }, [props.open, props.item]);
 
     const text = isEditMode? "edit": "create";
-    const id = props.item?.name
+    const id = props.item?.id
 
     useEffect(() => {
     if (props.item) {
       setName(props.item?.name);
       setAuthor(props.item?.author);
-      setPublishYear(props.item?.publishedYear || DEFAULT_YEAR);
+      setPublishYear(props.item?.publishYear || DEFAULT_YEAR);
     }
   }, [JSON.stringify(props.item)]);
 
@@ -47,10 +47,10 @@ useEffect(() => {
     const changedProps = 
       name !== props.item?.name ||
       author !== props.item?.author ||
-      publishedYear !== props.item?.publishedYear
+      publishYear !== props.item?.publishYear
 
     return changedProps
-  }, [name, author, publishedYear, props.item]);
+  }, [name, author, publishYear, props.item]);
 
   const clearForm = () => {
     setName('')
@@ -107,7 +107,7 @@ slotProps={{
       id="publishYear"
       name="publishYear"
       onChange={event=> {setPublishYear(Number(event.target.value))}}
-      value={publishedYear}
+      value={publishYear}
       label="publish Year"
       type="number"
       fullWidth
@@ -118,7 +118,7 @@ slotProps={{
   <DialogActions>
     <Button onClick={() => props.onClose()}>Cancel</Button>
     <Button disabled={!hasChanged || (!name || !author)} onClick={() => {
-       props.handleSubmit({id, name, author, publishedYear})
+       props.handleSubmit({id, name, author, publishYear})
         props.onClose()
         }} >{text}</Button>
   </DialogActions>
