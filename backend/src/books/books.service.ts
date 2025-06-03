@@ -9,18 +9,33 @@ export class BooksService {
       return await this.prisma.book.findUniqueOrThrow({where: {id}})
   }
 
-  async findAll(sortBy?: string, sortOrder: 'asc' | 'desc' = 'asc') {
-    const orderBy = {};
-    if (sortBy) {
-      orderBy[sortBy] = sortOrder;
+  async findAll(sortBy?: string, sortOrder: 'asc' | 'desc' = 'asc', page=1, limit=1) {
+  try {
+    const orderBy = sortBy ? [{ [sortBy]: sortOrder }] : undefined;
+    console.log(page)
+  const [totalCount, data] = await this.prisma.$transaction([
+    this.prisma.book.count(),
+    this.prisma.book.findMany({
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy 
+    }),
+  ]);
+  
+    const totalPages = Math.ceil(totalCount / limit);
 
-    try {
-  const res =  await this.prisma.book.findMany({ orderBy: sortBy ? [orderBy] : undefined})
-        return res
-  }
-         catch (error) {
-        throw new InternalServerErrorException("item not found");
-    }
+  return {
+    data,
+    meta: {
+      total: totalCount,
+      totalPages: totalPages,
+      currentPage: page,
+      limit: limit
+    },
+  };
+}
+  catch (error) {
+    throw new InternalServerErrorException(error.message);
   }
 }
 

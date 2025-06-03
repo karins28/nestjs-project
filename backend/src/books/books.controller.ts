@@ -11,10 +11,10 @@ export class BooksController {
         return await this.booksService.findOne(id)
     }
     @Get()
-    async findAll(@Query('sort') sort: 'asc'| 'desc' = 'desc'){
-        return await this.booksService.findAll('name', sort)
+    async findAll(@Query('sort') sort: 'asc'| 'desc' = 'asc', @Query('page') page?: number){
+        return await this.booksService.findAll('name', sort, page)
     }
-    
+
     @UsePipes(new ValidationPipe({ transform: true }))
     @Post()
     async create(@Body() input: CreateBookDto){

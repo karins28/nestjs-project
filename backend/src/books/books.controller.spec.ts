@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BooksController } from './books.controller';
 import { BooksService } from './books.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { IBook } from '@shared/types';
 
 const mockPrisma = {
   book: {
@@ -29,11 +30,12 @@ describe('BooksController', () => {
   });
 
 it('should return an array of books', async () => {
-  const result = [{ id: '1', author: '1984', name: 'name', publishYear: 2025, createdAt: new Date() }, 
-    { id: '2', author: '1984', name: 'name', publishYear: 2025, createdAt: new Date() }
-  ];
-  jest.spyOn(service, 'findAll').mockResolvedValue(result);
-  expect(await controller.findAll()).toEqual(result);
+  const result = [{id: '1', author: '1984', name: 'name', publishYear: 2025, createdAt: new Date() }, 
+    { id: '2', author: '1984', name: 'name', publishYear: 2025, createdAt: new Date() }];
+
+  const paginatedResult = {data: result, meta: {totalPages: 2, total: 50, limit: 20, currentPage: 2 }}
+  jest.spyOn(service, 'findAll').mockResolvedValue(paginatedResult);
+  expect(await controller.findAll()).toEqual(paginatedResult);
 });
 
 it('should return one book', async () => {

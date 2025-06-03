@@ -11,3 +11,15 @@ export interface IBook extends ICreateBookDto {
 export interface IUpdateBookDto extends Partial<IBook> {
 }
 
+
+export interface IPagination { 
+    total: number;
+    totalPages: number;
+    limit: number;
+    currentPage: number;
+}
+
+export interface IPaginatedBook {
+  data: IEmployee[];
+  meta: IPagination
+};
