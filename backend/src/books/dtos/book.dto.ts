@@ -1,6 +1,19 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsIn, IsInt, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, Max, Min } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import type {ICreateBookDto, IUpdateBookDto } from '@shared/types'
+import type {IBookQueryDto, IBook, ICreateBookDto, IUpdateBookDto } from '@shared/types'
+
+type BookProps = Array<keyof IBook>;
+const IBookKeys: (keyof IBook)[] = ['author', 'id', 'name', 'publishYear']
+
+export class BookQueryDto implements IBookQueryDto {
+  @IsIn(IBookKeys)
+  @IsOptional()
+  sort: BookProps;
+
+  @IsInt({ message: 'Name must be a string.' })
+  @IsPositive({message: 'Number is invalid'})
+  page: number;
+}
 
 export class CreateBookDto implements ICreateBookDto {
   @IsString({ message: 'Name must be a string.' })

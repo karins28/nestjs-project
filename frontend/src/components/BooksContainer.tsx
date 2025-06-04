@@ -8,10 +8,15 @@ import { BooksDialog } from "./BooksDialog/BooksDialog";
 import { DeleteDialog } from "./BooksDialog/DeleteBooksDialog";
 import { IconButton } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import type { IBook, ICreateBookDto } from "../../../shared/types";
+import type {  IPagination, IBook, ICreateBookDto } from "../../../shared/types"
 
 export const BooksContainer = () => {
-    const { isLoading,  data, error } = useQuery({ queryKey: ['fetchItems'], queryFn: fetchItems })
+    const [page, setPage] = useState<number>(1)
+    const { isLoading,  data, error } = useQuery(
+      { queryKey: ['fetchItems', page ], 
+        queryFn: () => fetchItems(page),
+         staleTime: 1000 * 120,
+      })
     const {mutate: createMutation} = useCreate();
     const {mutate: deleteMutation} = useDelete();
     const [selectedBook, setSelectedBook] = useState<IBook | undefined>();
@@ -19,25 +24,30 @@ export const BooksContainer = () => {
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
     const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
     const [books, setBooks] = useState<IBook[]>([]);
+    const [paginationParams, setPaginationParams] = useState<IPagination>();
 
     useEffect(() => {
-       if (data?.data) {
-    setBooks(data.data);
+       if (data) {
+          setBooks(data?.data);
+          setPaginationParams(data?.meta)
         }}, [data && JSON.stringify(data)])
 
 
     const handleCreate = (book: ICreateBookDto) => {
         createMutation(book);
+        setPage(1)
     }
 
       const handleEdit = (book: IBook) => {
         setSelectedBook(undefined)
          updateMutation(book);
+         setPage(1)
       }
 
       const handleDelete = (id: string) => {
         deleteMutation({id});
         setSelectedBook(undefined)
+        setPage(1)
     }
     const openDeleteDialog = (book: IBook) => {
       setSelectedBook(book)
@@ -59,6 +69,7 @@ const closeDialog = () => {
 };
 
 
+  const hasMorePages = paginationParams && (paginationParams.total > paginationParams.limit  * paginationParams.currentPage)
   const handleSubmit = selectedBook? handleEdit: handleCreate 
 
   return (
@@ -90,6 +101,10 @@ const closeDialog = () => {
         </Box>
 }
     {books?.length === 0 && !isLoading && <div>no books</div>}
+    {!isLoading && paginationParams && paginationParams?.currentPage>1 && 
+    <button onClick={() => {setPage(paginationParams?.currentPage-1)}}>
+      load previous page</button>}
+    {!isLoading && hasMorePages && <button onClick={() => {setPage(paginationParams?.currentPage+1)}}>load next pages</button>}
+
     </>
-  );
-};
+  )}

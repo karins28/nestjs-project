@@ -3,6 +3,12 @@ export interface ICreateBookDto {
     author: string;
     publishYear?: number;
 }
+
+export interface IBookQueryDto {
+    page?: number;
+    sort?: keys<IBook>
+}
+
 export interface IBook extends ICreateBookDto {
     id: string;
     createdAt: Date;
@@ -10,7 +16,6 @@ export interface IBook extends ICreateBookDto {
 
 export interface IUpdateBookDto extends Partial<IBook> {
 }
-
 
 export interface IPagination { 
     total: number;
@@ -23,3 +28,4 @@ export interface IPaginatedBook {
   data: IEmployee[];
   meta: IPagination
 };
+

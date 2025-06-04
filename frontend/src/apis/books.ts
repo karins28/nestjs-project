@@ -1,14 +1,15 @@
-import type { IBook, ICreateBookDto, IUpdateBookDto } from '../../../shared/types'
+import type { IBook, ICreateBookDto, IPaginatedBook, IUpdateBookDto } from '../../../shared/types'
 import { ROUTE_URL } from "../utils/constants";
 import api from './axiosConfig'
 
 export const ROUTE = ROUTE_URL+'/books'
 
-export const fetchItems = (): Promise<{data: IBook[]}> => {
+export const fetchItems = (page?: number): Promise<IPaginatedBook> => {
     return api({
         method: 'GET',
         url: ROUTE,
-      });
+        params: {page}
+      }).then(res=>res.data)
 };
 
 export const fetchBook = (id: string):Promise<IBook> => {
