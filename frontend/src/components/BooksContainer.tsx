@@ -37,7 +37,7 @@ export const BooksContainer = () => {
       setBooks(data.data);
       setPaginationParams(data.meta);
     }
-  }, [data && JSON.stringify(data)]); // Consider replacing this with [data] for better performance
+  }, [data && JSON.stringify(data)]);
 
   const handleCreate = (book: ICreateBookDto) => {
     createMutation(book);
@@ -125,16 +125,29 @@ export const BooksContainer = () => {
             <BookItem
               key={book.id}
               book={book}
-              handleEdit={() => {
-                openDialog(book);
-              }}
+              handleEdit={() => openDialog(book)}
               handleDelete={() => openDeleteDialog(book)}
             />
           ))}
         </Box>
       )}
+
+      {books?.length === 0 && !isLoading && <div>No books</div>}
+
+      {!isLoading && paginationParams && (
+        <Box display="flex" gap="16px" mt={3}>
+          {paginationParams.currentPage > 1 && (
+            <button onClick={() => setPage(paginationParams.currentPage - 1)}>
+              Load previous page
+            </button>
+          )}
+          {hasMorePages && (
+            <button onClick={() => setPage(paginationParams.currentPage + 1)}>
+              Load next page
+            </button>
+          )}
+        </Box>
+      )}
     </>
   );
 };
-
-  
