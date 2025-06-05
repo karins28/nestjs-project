@@ -1,0 +1,45 @@
+---
+
+## 🚀 Live Demo
+
+https://nestjs-project-frontend.onrender.com/
+
+---
+
+## 🧪 Features
+
+- 📖 View all books
+- ➕ Add a new book
+- 📝 Edit book details
+- ❌ Delete a book
+- Pagination
+- 🔌 Full REST API with Express
+- 💽 PostgreSQL with Prisma ORM
+
+---
+
+## 📦 Tech Stack
+
+| Frontend   | Backend   | Database |
+|------------|-----------|----------|
+| React + Vite | Express + Node.js | PostgreSQL + Prisma |
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- PostgreSQL
+- npm or yarn
+
+---
+
+## 🔙 Backend Setup (server/)
+
+```bash
+cd server
+npm install
+npx prisma migrate dev --name init
+npm run dev
