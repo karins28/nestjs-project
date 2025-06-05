@@ -1,5 +1,4 @@
 import type { IBook, ICreateBookDto, IPaginatedBook, IUpdateBookDto } from '../../../shared/types'
-import { ROUTE_URL } from "../utils/constants";
 import api from './axiosConfig'
 
 export const ROUTE = import.meta.env.VITE_API_URL+'/books'

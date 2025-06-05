@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { ROUTE_URL} from '../utils/constants'
 
     const api = axios.create({
-      baseURL: ROUTE_URL,
+      baseURL: import.meta.env.VITE_API_URL,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
