@@ -2,7 +2,7 @@ import type { IBook, ICreateBookDto, IPaginatedBook, IUpdateBookDto } from '../.
 import { ROUTE_URL } from "../utils/constants";
 import api from './axiosConfig'
 
-export const ROUTE = ROUTE_URL+'/books'
+export const ROUTE = import.meta.env.VITE_API_URL+'/books'
 
 export const fetchItems = (page?: number): Promise<IPaginatedBook> => {
     return api({
