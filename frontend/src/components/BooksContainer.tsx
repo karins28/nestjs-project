@@ -135,7 +135,7 @@ export const BooksContainer = () => {
       {books?.length === 0 && !isLoading && <div>No books</div>}
 
       {!isLoading && paginationParams && (
-        <Box display="flex" gap="16px" mt={3}>
+        <Box display="flex" justifyContent="center" gap="16px" mt={3}>
           {paginationParams.currentPage > 1 && (
             <button onClick={() => setPage(paginationParams.currentPage - 1)}>
               Load previous page
